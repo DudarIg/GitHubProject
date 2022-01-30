@@ -6,9 +6,9 @@ import ru.dudar_ig.githubproject.domain.Users
 
 class UsersViewModel: ViewModel() {
 
-    val usersViewModel: LiveData<List<Users>>
+    val items: LiveData<List<Users>>
     init {
-        usersViewModel = ApiDataImpl().loadUsers()
+        items = ApiDataImpl().loadUsers()
     }
 
 }
