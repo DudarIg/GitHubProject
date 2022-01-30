@@ -12,7 +12,7 @@ import ru.dudar_ig.githubproject.R
 import ru.dudar_ig.githubproject.domain.Users
 
 class UsersAdapter: RecyclerView.Adapter<UsersAdapter.UserHolder>() {
-    private var homeData = ArrayList<Users>()
+    private var usersData = ArrayList<Users>()
 
     class UserHolder(itemView: View, val holderContext : Context): RecyclerView.ViewHolder(itemView) {
         val login : TextView = itemView.findViewById(R.id.text_view)
@@ -33,17 +33,16 @@ class UsersAdapter: RecyclerView.Adapter<UsersAdapter.UserHolder>() {
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-        val home = homeData[position]
 
-        holder.setData(home)
+        holder.setData(usersData[position])
     }
 
     override fun getItemCount(): Int {
-        return homeData.size
+        return usersData.size
     }
     fun updateHomeAdapter(dataList: List<Users>) {
-        homeData.clear()
-        homeData.addAll(dataList)
+        usersData.clear()
+        usersData.addAll(dataList)
         notifyDataSetChanged()
     }
 }
