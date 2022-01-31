@@ -35,17 +35,14 @@ class ApiDataImpl {
         api = retrofit.create(ApiData::class.java)
     }
 
-    fun loadUsers(): LiveData<List<User>> {
-        val resultLiveData: MutableLiveData<List<User>> = MutableLiveData()
+    fun loadUsers(): LiveData<List<ApiUsers>> {
+        val resultLiveData: MutableLiveData<List<ApiUsers>> = MutableLiveData()
         api.getUsers().enqueue(object : Callback<List<ApiUsers>> {
             override fun onResponse(call: Call<List<ApiUsers>>, response: Response<List<ApiUsers>>) {
                 val jsonUsers: List<ApiUsers>? = response.body()
-                val usersList = mutableListOf<User>()
+                val usersList = mutableListOf<ApiUsers>()
                 jsonUsers?.forEach {
-                    val users = User()
-                    users.id = it.id
-                    users.login = it.login
-                    users.avatar_url = it.avatar_url
+                    val users = ApiUsers(it.login, it.id, it.avatar_url)
                     usersList.add(users)
                 }
                 resultLiveData.postValue(usersList)
