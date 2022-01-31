@@ -33,14 +33,13 @@ class UsersAdapter: RecyclerView.Adapter<UsersAdapter.UserHolder>() {
     }
 
     override fun onBindViewHolder(holder: UserHolder, position: Int) {
-
         holder.setData(usersData[position])
     }
 
     override fun getItemCount(): Int {
         return usersData.size
     }
-    fun updateHomeAdapter(dataList: List<Users>) {
+    fun updateAdapter(dataList: List<Users>) {
         usersData.clear()
         usersData.addAll(dataList)
         notifyDataSetChanged()
