@@ -1,5 +1,6 @@
 package ru.dudar_ig.githubproject.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
@@ -10,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import ru.dudar_ig.githubproject.domain.Repozitories
-import ru.dudar_ig.githubproject.domain.Users
+import ru.dudar_ig.githubproject.domain.User
 
 
 private const val BASEURL = "https://api.github.com"
@@ -34,14 +35,14 @@ class ApiDataImpl {
         api = retrofit.create(ApiData::class.java)
     }
 
-    fun loadUsers(): LiveData<List<Users>> {
-        val resultLiveData: MutableLiveData<List<Users>> = MutableLiveData()
+    fun loadUsers(): LiveData<List<User>> {
+        val resultLiveData: MutableLiveData<List<User>> = MutableLiveData()
         api.getUsers().enqueue(object : Callback<List<ApiUsers>> {
             override fun onResponse(call: Call<List<ApiUsers>>, response: Response<List<ApiUsers>>) {
                 val jsonUsers: List<ApiUsers>? = response.body()
-                val usersList = mutableListOf<Users>()
+                val usersList = mutableListOf<User>()
                 jsonUsers?.forEach {
-                    val users = Users()
+                    val users = User()
                     users.id = it.id
                     users.login = it.login
                     users.avatar_url = it.avatar_url
@@ -69,7 +70,7 @@ class ApiDataImpl {
                     val repo = Repozitories()
                     repo.id = it.id
                     repo.name = it.name
-                    repo.private = it.private
+                    //repo.private = it.private
                     repozitories.add(repo)
                 }
                 resultLiveData.postValue(repozitories)

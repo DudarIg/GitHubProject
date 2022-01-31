@@ -6,31 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/image_view"
-        android:layout_width="100dp"
-        android:adjustViewBounds="true"
-        android:layout_height="wrap_content"
-        android:scaleType="fitStart"
-        android:layout_weight="1"
-        android:layout_marginStart="@dimen/marginStart"
-        android:layout_marginTop="@dimen/marginTopBottom"
-        android:layout_marginBottom="@dimen/marginTopBottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
-        android:id="@+id/text_view"
+        android:id="@+id/namerepo_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text"
-        android:textColor="@color/black"
-        android:layout_marginStart="@dimen/marginStart"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image_view"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View

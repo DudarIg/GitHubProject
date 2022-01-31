@@ -2,6 +2,7 @@ package ru.dudar_ig.githubproject.ui
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -31,6 +32,12 @@ class UsersFragment : Fragment(R.layout.users_fragment) {
         usersViewModel.items.observe(this, Observer {
             usersAdapter.updateAdapter(it)
         })
+
+        usersAdapter.funUserClick = {
+            val fragment = ReposFragment.newInstance(it)
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container,
+                fragment)?.addToBackStack(null)?.commit()
+        }
 
     }
 
