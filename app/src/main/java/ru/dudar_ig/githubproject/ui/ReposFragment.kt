@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import ru.dudar_ig.githubproject.R
 import ru.dudar_ig.githubproject.TekLogin
 import ru.dudar_ig.githubproject.adapter.ReposAdapter
+import ru.dudar_ig.githubproject.data.ApiUsers
 import ru.dudar_ig.githubproject.databinding.FragmentReposBinding
 import ru.dudar_ig.githubproject.domain.User
 
@@ -17,7 +18,7 @@ private const val ARG_USER = "param"
 
 class ReposFragment : Fragment(R.layout.fragment_repos) {
 
-    private lateinit var user : User
+    private lateinit var user : ApiUsers
 
     private val reposAdapter = ReposAdapter()
     private var _binding: FragmentReposBinding? = null
@@ -26,7 +27,7 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            user = it.getSerializable(ARG_USER) as User
+            user = it.getSerializable(ARG_USER) as ApiUsers
         }
     }
 
@@ -53,7 +54,7 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
 
     companion object {
         @JvmStatic
-        fun newInstance(userParam: User) =
+        fun newInstance(userParam: ApiUsers) =
             ReposFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(ARG_USER, userParam)
