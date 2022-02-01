@@ -8,6 +8,7 @@ import ru.dudar_ig.githubproject.data.ApiUsers
 import ru.dudar_ig.githubproject.domain.User
 
 class UsersViewModel: ViewModel() {
+
     val items: LiveData<List<ApiUsers>>
     init {
         items = ApiDataImpl().loadUsers()
