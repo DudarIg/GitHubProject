@@ -1,4 +1,4 @@
-package ru.dudar_ig.githubproject.adapter
+package ru.dudar_ig.githubproject.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ru.dudar_ig.githubproject.R
 import ru.dudar_ig.githubproject.data.ApiUsers
-import ru.dudar_ig.githubproject.domain.User
 
 class UsersAdapter: RecyclerView.Adapter<UsersAdapter.UserHolder>() {
     private var usersData = ArrayList<ApiUsers>()

@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.dudar_ig.githubproject.R
 import ru.dudar_ig.githubproject.TekLogin
-import ru.dudar_ig.githubproject.adapter.ReposAdapter
+import ru.dudar_ig.githubproject.ui.adapter.ReposAdapter
 import ru.dudar_ig.githubproject.data.ApiUsers
 import ru.dudar_ig.githubproject.databinding.FragmentReposBinding
-import ru.dudar_ig.githubproject.domain.User
 
 private const val ARG_USER = "param"
 
@@ -37,17 +37,23 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
 
         TekLogin.login = user.login
         val reposViewModel by viewModels<ReposViewModel>()
-        Glide.with(context!!)
+        Glide.with(requireContext())
                 .load(user.avatar_url)
                 .into(binding.imageAvatar)
         binding.textLogin.text = user.login
 
         binding.recycle.layoutManager = LinearLayoutManager(context)
         binding.recycle.adapter = reposAdapter
-        reposViewModel.items?.observe(this, Observer {
-            reposAdapter.updateAdapter(it)
-        } )
+//        reposViewModel.items?.observe(viewLifecycleOwner, Observer {
+//            reposAdapter.updateAdapter(it)
+//        } )
 
+        reposViewModel.itemsRx
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                reposAdapter.updateAdapter(it)
+            })
 
     }
 

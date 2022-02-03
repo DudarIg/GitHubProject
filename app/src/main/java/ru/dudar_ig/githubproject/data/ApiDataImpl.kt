@@ -3,6 +3,7 @@ package ru.dudar_ig.githubproject.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,6 +13,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import ru.dudar_ig.githubproject.domain.Repozitories
 import ru.dudar_ig.githubproject.domain.User
+import kotlin.properties.Delegates.observable
 
 private const val BASEURL = "https://api.github.com"
 
@@ -25,7 +27,6 @@ interface ApiData {
 
 class ApiDataImpl {
     private val api: ApiData
-
     init {
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -54,18 +55,16 @@ class ApiDataImpl {
         return resultLiveData
     }
 
-   fun loadRepos(user: String): LiveData<List<Repozitories>> {
-        val resultLiveData: MutableLiveData<List<Repozitories>> = MutableLiveData()
+    fun loadRepos(user: String): LiveData<List<ApiRepozitories>> {
+        val resultLiveData: MutableLiveData<List<ApiRepozitories>> = MutableLiveData()
         api.getRepos(user).enqueue(object : Callback<List<ApiRepozitories>>{
             override fun onResponse(
                 call: Call<List<ApiRepozitories>>,
                 response: Response<List<ApiRepozitories>> ) {
                 val jsonRepozitories: List<ApiRepozitories>? = response.body()
-                val repozitories = mutableListOf<Repozitories>()
+                val repozitories = mutableListOf<ApiRepozitories>()
                 jsonRepozitories?.forEach {
-                    val repo = Repozitories()
-                    repo.id = it.id
-                    repo.name = it.name
+                    val repo = ApiRepozitories( it.id,it.name)
                     //repo.private = it.private
                     repozitories.add(repo)
                 }

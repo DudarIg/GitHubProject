@@ -1,19 +1,15 @@
-package ru.dudar_ig.githubproject.adapter
+package ru.dudar_ig.githubproject.ui.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import ru.dudar_ig.githubproject.R
-import ru.dudar_ig.githubproject.domain.Repozitories
-import ru.dudar_ig.githubproject.domain.User
+import ru.dudar_ig.githubproject.data.ApiRepozitories
 
 class ReposAdapter: RecyclerView.Adapter<ReposAdapter.RepoHolder>() {
-    private var repoData = ArrayList<Repozitories>()
+    private var repoData = ArrayList<ApiRepozitories>()
 
 
     class RepoHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -34,7 +30,7 @@ class ReposAdapter: RecyclerView.Adapter<ReposAdapter.RepoHolder>() {
     override fun getItemCount(): Int {
         return repoData.size
     }
-    fun updateAdapter(dataList: List<Repozitories>) {
+    fun updateAdapter(dataList: List<ApiRepozitories>) {
         repoData.clear()
         repoData.addAll(dataList)
         notifyDataSetChanged()
