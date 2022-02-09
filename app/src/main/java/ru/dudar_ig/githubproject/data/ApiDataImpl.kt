@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.kotlin.toObservable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,6 +13,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import ru.dudar_ig.githubproject.RepoObserver.repoUsers
+import ru.dudar_ig.githubproject.TekLogin
 import ru.dudar_ig.githubproject.domain.Repozitories
 import ru.dudar_ig.githubproject.domain.User
 import kotlin.properties.Delegates.observable
@@ -53,6 +57,28 @@ class ApiDataImpl {
 
         })
         return resultLiveData
+    }
+
+    fun loadUsersRx(): Observable<List<ApiUsers>> {
+        val usersL = mutableListOf<ApiUsers>()
+        api.getUsers().enqueue(object : Callback<List<ApiUsers>> {
+            override fun onResponse(call: Call<List<ApiUsers>>, response: Response<List<ApiUsers>>) {
+                val jsonUsers: List<ApiUsers>? = response.body()
+                repoUsers.clear()
+
+                jsonUsers?.forEach {
+                    val users = ApiUsers(it.login, it.id, it.avatar_url)
+                    repoUsers.add(users)
+                    Log.d("@@@", "1 $repoUsers")
+                }
+
+            }
+            override fun onFailure(call: Call<List<ApiUsers>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+        return Observable.just(repoUsers)
     }
 
     fun loadRepos(user: String): LiveData<List<ApiRepozitories>> {

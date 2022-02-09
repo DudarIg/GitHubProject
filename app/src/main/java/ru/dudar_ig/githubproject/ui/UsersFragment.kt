@@ -33,12 +33,21 @@ class UsersFragment : Fragment(R.layout.users_fragment) {
 //            usersAdapter.updateAdapter(it)
 //        })
 
-        usersViewModel.itemsRx
+//        usersViewModel.itemsRx
+//            .subscribeOn(Schedulers.newThread())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe({
+//                usersAdapter.updateAdapter(it)
+//            })
+        usersViewModel.itemsRxx
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 usersAdapter.updateAdapter(it)
             })
+
+
+
 
         usersAdapter.funUserClick = {
             val fragment = ReposFragment.newInstance(it)
